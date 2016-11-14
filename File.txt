@@ -1,0 +1,82 @@
+import java.io.*;
+
+import java.util.Scanner;
+public class File {
+
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Enter file directory: ");
+		String dir = scan.nextLine();
+	
+		BufferedReader bf = null;
+		String string;
+		
+		try{
+			if(dir.matches("^(.*)/([^/]*)$")){
+				bf = new BufferedReader(new FileReader(dir));
+				
+				while ((string = bf.readLine()) != null){
+					String[] split = string.split("\\*");
+					int size = split.length / 4 + 1;
+					String[] number = new String[size];
+					String[] fname = new String[size];
+					String[] lname = new String[size];
+					String[] year = new String[size];
+					int k = 0;
+					try {
+						for (int i = 0; i < size; i++) {
+							number[i] = split[k];
+							fname[i] = split[k + 1];
+							lname[i] = split[k + 2];
+							year[i] = split[k + 3];
+							k += 4;
+							System.out.println(number[i] + " " + fname[i] + " " + lname[i] + " " + year[i] + "\n");
+						}
+							
+							//--- Write to file --- 
+							BufferedWriter br = null;
+							FileWriter fr = null;
+							try {
+								//File file = new File("/data/Documents/Programming/Java/FileResult.txt");
+								//file.createNewFile();
+								br = new BufferedWriter(new FileWriter("/data/Documents/Programming/Java/FileResult.txt"));
+								for (int i = 0; i < 3; i++) {
+									br.write(number[i] + " " + fname[i] + " " + lname[i] + " " + year[i] + "\n");
+								} 
+								br.flush();
+							} catch (Exception e) {
+							}finally{
+						        if(br!=null ){
+						            try {
+						                br.close();
+						            } catch (IOException e) {
+						                e.printStackTrace();
+						               }
+						        }
+							
+							}
+							
+							
+					
+					}catch (Exception e) {
+					}
+				}	
+			}else System.out.println("Wrong directory!");
+		}catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				if(bf != null)
+					bf.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}	
+		}
+		
+		String str;
+		
+		//BufferedWriter br = null;
+		//br = new BufferedWriter(new FileWriter(/data/Documents/Programming/Java/FileResult.txt));
+				
+	}
+}
